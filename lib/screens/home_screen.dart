@@ -31,43 +31,17 @@ class HomeScreen extends StatelessWidget {
 }
 
 
-class BuildJobCards extends StatefulWidget {
+class BuildJobCards extends StatelessWidget {
   final List<Job> jobs;
 
   BuildJobCards({required this.jobs});
 
   @override
-  _BuildJobCardsState createState() => _BuildJobCardsState();
-}
-
-class _BuildJobCardsState extends State<BuildJobCards> {
-  ScrollController _scrollController=ScrollController();
-  int _currentLength=10;
-  
-  @override
-  void initState(){
-    super.initState();
-    _scrollController.addListener(() {
-      if(_scrollController.position.pixels==_scrollController.position.maxScrollExtent){
-        _getMoreData();
-      }
-    });
-  }
-
-  _getMoreData(){
-    for(int i=_currentLength;i<_currentLength+10;i++)
-    {
-      
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      controller: _scrollController,
-      itemCount: widget.jobs.length,
+      itemCount: jobs.length,
       itemBuilder: (context,index){
-        final job=widget.jobs[index];
+        final job=jobs[index];
         return JobCard(job: job);
       },
     );

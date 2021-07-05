@@ -39,6 +39,7 @@ class Job{
     salary: json['salary'],
     description: json['description'],
   );
+  
 
   
 }
