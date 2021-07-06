@@ -45,7 +45,8 @@ class MainPage extends StatelessWidget {
             actions: [
               IconButton(
                 onPressed: ()async{
-                   showSearch(context: context, delegate: JobTitleSearch());
+                  final results= await showSearch(context: context, delegate: JobTitleSearch());
+                  print(results);
                 }, 
                 icon: Icon(Icons.search, size: 18.0,),
                 iconSize: 18.0,

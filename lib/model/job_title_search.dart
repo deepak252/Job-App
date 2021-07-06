@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:job_app/api/job_api.dart';
+import 'package:job_app/screens/home_screen.dart';
+
+import 'job.dart';
 
 class JobTitleSearch extends SearchDelegate<String>{
 
@@ -32,7 +35,32 @@ class JobTitleSearch extends SearchDelegate<String>{
   @override
   Widget buildResults(BuildContext context){
     // return SelectedJobScreen(job: job);
-    return Center(child: Text('selected job screen'));
+    // print(query);
+    // return Center(child: Text('selected job screen'));
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.0),
+      child: FutureBuilder<List<Job>>(
+        future: JobApi.getSearchedJobTitles(query),
+        builder: (context, snapshot) {
+          final jobList = snapshot.data;
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            default:
+              if (snapshot.hasError)
+              {
+                print(snapshot.error);
+                return Center(child: Text('Error for getting jobs data'));
+              }
+              else {
+                return BuildJobCards(jobs: jobList!);
+              }
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -52,7 +80,7 @@ class JobTitleSearch extends SearchDelegate<String>{
             if(data.isEmpty  ||  snapshot.hasError)
               return buildNoSuggestions();
             else{
-              final suggestions = query.isEmpty
+              var suggestions = query.isEmpty
                       ? ['']
                       : data.where((jobTitle) {
                           final cityLower = jobTitle.toLowerCase();
@@ -60,6 +88,7 @@ class JobTitleSearch extends SearchDelegate<String>{
 
                           return cityLower.startsWith(queryLower);
                         }).toList();
+                  suggestions=suggestions.toSet().toList();
                   return buildSuggestionsSuccess(suggestions);
 
             }
@@ -92,8 +121,8 @@ class JobTitleSearch extends SearchDelegate<String>{
       itemCount: suggestions.length,
       itemBuilder: (context,index){
         final suggestion=suggestions[index];
-        final queryText = suggestion.substring(0, query.length);
-        final remainingText = suggestion.substring(query.length);
+        // final queryText = suggestion.substring(0, query.length);
+        // final remainingText = suggestion.substring(query.length);
 
         return ListTile(
             onTap: () {
@@ -114,25 +143,26 @@ class JobTitleSearch extends SearchDelegate<String>{
             },
             leading: Icon(Icons.location_city),
             // title: Text(suggestion),
-            title: RichText(
-              text: TextSpan(
-                text: queryText,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-                children: [
-                  TextSpan(
-                    text: remainingText,
-                    style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 18,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // title: RichText(
+            //   text: TextSpan(
+            //     text: queryText,
+            //     style: TextStyle(
+            //       // color: Colors.white,
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 18,
+            //     ),
+            //     children: [
+            //       TextSpan(
+            //         text: remainingText,
+            //         style: TextStyle(
+            //           color: Colors.white54,
+            //           fontSize: 18,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            title: Text(suggestion),
           );
       }
     );

@@ -6,7 +6,7 @@ class Job{
   final String category;
   final List<dynamic> tags;
   final String jobType;
-  final String publicationDate;
+  final DateTime publicationDate;
   final String candidateRequiredLocation;
   final String salary;
   final String description;
@@ -26,7 +26,7 @@ class Job{
 
   });
 
-  static Job fromJson(json) => Job(
+  factory Job.fromJson(Map<String,dynamic> json) => Job(
     id: json['id'],
     url: json['url'],
     title: json['title'],
@@ -34,7 +34,7 @@ class Job{
     category: json['category'],
     tags: json['tags'],
     jobType: json['job_type'],
-    publicationDate: json['publication_date'],
+    publicationDate: DateTime.parse(json['publication_date']),
     candidateRequiredLocation: json['candidate_required_location'],
     salary: json['salary'],
     description: json['description'],

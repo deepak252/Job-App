@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-const kCardColorDark = Color(0xff1c253b);
-const kCardColorLight=Colors.white;
+const kCardColorDark = Color(0xff232e4a);
+const kCardColorLight = Colors.white;
+const kTextColorDark = Colors.white;
+const kTextColorLight = Colors.black;
 
 
 ThemeData kDarkTheme=ThemeData.dark().copyWith(
