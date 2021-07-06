@@ -34,9 +34,7 @@ class JobTitleSearch extends SearchDelegate<String>{
 
   @override
   Widget buildResults(BuildContext context){
-    // return SelectedJobScreen(job: job);
-    // print(query);
-    // return Center(child: Text('selected job screen'));
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.0),
       child: FutureBuilder<List<Job>>(
@@ -83,10 +81,10 @@ class JobTitleSearch extends SearchDelegate<String>{
               var suggestions = query.isEmpty
                       ? ['']
                       : data.where((jobTitle) {
-                          final cityLower = jobTitle.toLowerCase();
+                          final titleLower = jobTitle.toLowerCase();
                           final queryLower = query.toLowerCase();
 
-                          return cityLower.startsWith(queryLower);
+                          return titleLower.startsWith(queryLower);
                         }).toList();
                   suggestions=suggestions.toSet().toList();
                   return buildSuggestionsSuccess(suggestions);
@@ -96,17 +94,6 @@ class JobTitleSearch extends SearchDelegate<String>{
       }
     );
   }
-
-  // final suggestions = query.isEmpty
-  //       ? recentCities
-  //       : cities.where((city) {
-  //           final cityLower = city.toLowerCase();
-  //           final queryLower = query.toLowerCase();
-
-  //           return cityLower.startsWith(queryLower);
-  //         }).toList();
-
-  //   return buildSuggestionsSuccess(suggestions);
 
 
   Widget buildNoSuggestions() => Center(
@@ -121,47 +108,16 @@ class JobTitleSearch extends SearchDelegate<String>{
       itemCount: suggestions.length,
       itemBuilder: (context,index){
         final suggestion=suggestions[index];
-        // final queryText = suggestion.substring(0, query.length);
-        // final remainingText = suggestion.substring(query.length);
+
 
         return ListTile(
             onTap: () {
               query = suggestion;
-
-              // 1. Show Results
               showResults(context);
-              // 2. Close Search & Return Result
-              // close(context, suggestion);
-
-              // 3. Navigate to Result Page
-              //  Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (BuildContext context) => ResultPage(suggestion),
-              //   ),
-              // );
+              
             },
             leading: Icon(Icons.location_city),
-            // title: Text(suggestion),
-            // title: RichText(
-            //   text: TextSpan(
-            //     text: queryText,
-            //     style: TextStyle(
-            //       // color: Colors.white,
-            //       fontWeight: FontWeight.bold,
-            //       fontSize: 18,
-            //     ),
-            //     children: [
-            //       TextSpan(
-            //         text: remainingText,
-            //         style: TextStyle(
-            //           color: Colors.white54,
-            //           fontSize: 18,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            
             title: Text(suggestion),
           );
       }

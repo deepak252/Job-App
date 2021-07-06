@@ -9,7 +9,8 @@ const kTextColorLight = Colors.black;
 ThemeData kDarkTheme=ThemeData.dark().copyWith(
   scaffoldBackgroundColor: Color(0xff171e30),
   appBarTheme: AppBarTheme(
-    backgroundColor: Color(0xff171e30),
+    // backgroundColor: Color(0xff171e30),
+      backgroundColor: kCardColorDark,
     elevation: 0,    
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -30,7 +31,7 @@ ThemeData kLightTheme=ThemeData.light().copyWith(
 
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.white,
-    elevation: 5,
+    elevation: 0,
     textTheme:TextTheme(
       headline6: TextStyle(
          color: Colors.black

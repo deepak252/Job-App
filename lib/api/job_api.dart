@@ -42,6 +42,51 @@ class JobApi{
     }
   }
 
+  static Future<List<String>> getJobTypes() async {
+    if (_data != null) {
+      return _data.map<String>((json) {
+        String jobType = json['type'];
+        return jobType;
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
+static Future<List<String>> getJobCategories() async {
+    if (_data != null) {
+      return _data.map<String>((json) {
+        String jobCategory = json['category'];
+        return jobCategory;
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
+
+  static Future<List<Job>> getFilteredJobs(String query) async {
+    if (_data != null) {
+      return _data.map<Job>((json) => Job.fromJson(json)).where((Job job) {
+        String jobTypeLower = job.jobType.toLowerCase();
+        String jobCategoryLower = job.category.toLowerCase();
+        String searchLower = query.toLowerCase();
+        return jobTypeLower.contains(searchLower) || jobCategoryLower.contains(searchLower);
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
+
+  // static Future<List<Job>> orderByDateTime() async {
+  //   List<Job> sortedData=[];
+  //   if (_data != null) {
+  //     return _data.map<Job>((json) => Job.fromJson(json)).where((Job job) {
+  //       return titleLower.contains(searchLower);
+  //     }).toList();
+  //   } else {
+  //     throw Exception();
+  //   }
+  // }
+
 
 
 }
